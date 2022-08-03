@@ -4,11 +4,11 @@ import cors from 'cors';
 import morgan from 'morgan';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
+import productRouter from './routes/productsRoutes.js';
 
 dotenv.config();
 
-// ket noi DB
-
+//Connect with MongoDB
 mongoose.connect(process.env.MONGODB_URI).then(() => {
     console.log("Connected to DB");
 }).catch((err) => {
@@ -25,8 +25,13 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(morgan("dev"));
 
+//routes
+app.use('/api/products/', productRouter);
+// app.use('/api/users/', userRouter);
+// app.use('/api/bills/', billsRouter);
+
 //Create Port 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5005;
 
 //Listen
 app.listen(PORT, () => {
